@@ -11,8 +11,8 @@ function App() {
 
         {/* 配置路由规则 */}
         <Routes>
-          <Route path="/home" component={Home}></Route>
-          <Route path="/login" component={Login}></Route>
+          <Route path="/home" element={<Home/>}></Route>
+          <Route path="/login" element={<Login/>}></Route>
         </Routes>
 
       </div>
