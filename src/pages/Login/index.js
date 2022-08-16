@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Card, Button, Checkbox, Form, Input } from 'antd'
+import { Card, Button, Checkbox, Form, Input, message } from 'antd'
 import './index.scss'
 import logo from 'assets/logo.png'
+import { login } from 'api/user'
 
 export default class Login extends Component {
   render() {
@@ -89,7 +90,24 @@ export default class Login extends Component {
     )
   }
 
-  onFinish = (values) => {
-    console.log(values);
-  }
+    onFinish = async ({ mobile, code }) => {
+        try {
+            const res = await login(mobile, code)
+            console.log(res);
+            // 登陆成功
+            // 1.保存token
+            localStorage.setItem('token', res.data.token)
+            // 2.跳转到首页
+            this.props.history.push('/home')
+            // 3.提示消息
+            message.success('登录成功', 1)
+        } catch(error) {
+            // console.dir(error);
+            // alert(error.response.data.message)
+            console.log(error);
+            message.warning(error.response.data.message, 1)
+        }
+
+    }
 }
+
